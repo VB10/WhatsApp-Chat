@@ -6,5 +6,5 @@ import 'chat_android.dart';
 
 class Chat extends StatefulWidget {
   @override
-  createState() => !Platform.isIOS ? ChatView() : ChatViewAndroid();
+  createState() => Platform.isIOS ? ChatView() : ChatViewAndroid();
 }

@@ -25,11 +25,9 @@ class ChatViewAndroid extends ChatViewModel {
           centerTitle: false,
           backgroundColor: Colors.green,
           bottom: TabBar(
-            tabs: [Tab(text: "CHATS"), Tab(text: "STATE"), Tab(text: "CALL")],
-            indicatorColor: Theme.of(context).canvasColor,
-            // unselectedLabelColor: Colors.red,
-            labelStyle: appBarTextStyle,
-          ),
+              tabs: [Tab(text: "CHATS"), Tab(text: "STATE"), Tab(text: "CALL")],
+              indicatorColor: Theme.of(context).canvasColor,
+              labelStyle: Theme.of(context).textTheme.headline6),
         ),
         body: buildFutureChats(),
       ),
@@ -43,7 +41,7 @@ class ChatViewAndroid extends ChatViewModel {
   TextStyle get appBarTitleTextStyle => Theme.of(context)
       .primaryTextTheme
       .headline4
-      .copyWith(fontWeight: FontWeight.w700);
+      .copyWith(fontWeight: FontWeight.w700, color: Colors.white);
 
   Widget buildFutureChats() {
     return FutureBuilder<List<ChatModel>>(

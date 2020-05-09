@@ -1,21 +1,18 @@
 import 'package:dio/dio.dart';
 
-class NetworkService {
-  static NetworkService _instance;
+class NetworkManager {
+  static NetworkManager _instance;
   Dio dio;
-
-  static NetworkService get instance {
+  static NetworkManager get instance {
     if (_instance == null) {
-      _instance = NetworkService.init();
+      _instance = NetworkManager._init();
     }
     return _instance;
   }
 
-  NetworkService.init() {
-    final options = BaseOptions(
-      baseUrl: "https://hwasampleapi.firebaseio.com/",
-    );
-
+  NetworkManager._init() {
+    final options =
+        BaseOptions(baseUrl: "https://hwasampleapi.firebaseio.com/");
     dio = Dio(options);
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options) {

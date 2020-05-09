@@ -2,28 +2,58 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:whatchats/screen/chat/model/user_chat.dart';
 import './chat_view_model.dart';
+import 'model/chat_model.dart';
 
-class ChatView extends ChatViewModel {
+class ChatViewAndroid extends ChatViewModel {
   bool isChatAppBarClosed = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: buildFutureChats(),
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "WhatsApp",
+            style: appBarTitleTextStyle,
+          ),
+          actions: [
+            IconButton(icon: Icon(Icons.search), onPressed: () {}),
+            IconButton(icon: Icon(Icons.more_vert), onPressed: () {}),
+          ],
+          centerTitle: false,
+          backgroundColor: Theme.of(context).accentColor,
+          bottom: TabBar(
+            tabs: [Tab(text: "CHATS"), Tab(text: "STATE"), Tab(text: "CALL")],
+            indicatorColor: Theme.of(context).canvasColor,
+            // unselectedLabelColor: Colors.red,
+            labelStyle: appBarTextStyle,
+          ),
+        ),
+        body: buildFutureChats(),
+      ),
     );
   }
 
+  TextStyle get appBarTextStyle => Theme.of(context)
+      .primaryTextTheme
+      .headline5
+      .copyWith(fontWeight: FontWeight.w700);
+  TextStyle get appBarTitleTextStyle => Theme.of(context)
+      .primaryTextTheme
+      .headline4
+      .copyWith(fontWeight: FontWeight.w700);
+
   Widget buildFutureChats() {
-    return FutureBuilder<List<UserChat>>(
-      future: getAllChatData(),
+    return FutureBuilder<List<ChatModel>>(
+      future: getChatAllData(),
       initialData: [],
-      builder: (BuildContext context, AsyncSnapshot<List<UserChat>> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<List<ChatModel>> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.done:
             if (snapshot.hasData) {
-              return buildNestedScrollViewBody(snapshot.data);
+              return buildListCard(snapshot.data);
             } else {
               return Text(snapshot.error);
             }
@@ -53,24 +83,14 @@ class ChatView extends ChatViewModel {
     );
   }
 
-  NestedScrollView buildNestedScrollViewBody(List<UserChat> chats) {
-    return NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) {
-          return [
-            buildAppBarTop(innerBoxIsScrolled),
-            buildSliverAppBarChats(context),
-          ];
-        },
-        body: ListView.builder(
-          padding: EdgeInsets.all(10),
-          itemCount: chats.length,
-          itemBuilder: (context, index) {
-            if (index == 0) {
-              return buildHeader(chats[index]);
-            } else
-              return buildUserCard(chats[index]);
-          },
-        ));
+  Widget buildListCard(List<ChatModel> chats) {
+    return ListView.builder(
+      padding: EdgeInsets.all(10),
+      itemCount: chats.length,
+      itemBuilder: (context, index) {
+        return buildUserCard(chats[index]);
+      },
+    );
   }
 
   Visibility buildTitleCenterText(bool isChatAppBarClosed) {
@@ -115,27 +135,6 @@ class ChatView extends ChatViewModel {
     );
   }
 
-  Column buildHeader(UserChat chat) {
-    return Column(
-      children: [
-        Column(
-          children: [
-            Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                buildAutoSizeText("Broadcast List"),
-                buildAutoSizeText("New Group")
-              ],
-            ),
-            Divider(),
-          ],
-        ),
-        buildUserCard(chat),
-      ],
-    );
-  }
-
   AutoSizeText buildAutoSizeText(String text) {
     return AutoSizeText(
       text,
@@ -146,7 +145,7 @@ class ChatView extends ChatViewModel {
     );
   }
 
-  ListTile buildUserCard(UserChat chat) {
+  ListTile buildUserCard(ChatModel chat) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: CircleAvatar(
@@ -166,27 +165,10 @@ class ChatView extends ChatViewModel {
           Spacer()
         ],
       ),
-      subtitle: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                  flex: 5,
-                  child: AutoSizeText(
-                    chat.message,
-                    maxLines: 2,
-                  )),
-              Expanded(
-                child: Icon(
-                  Icons.chevron_right,
-                  color: Theme.of(context).splashColor,
-                ),
-              )
-            ],
-          ),
-          Divider()
-        ],
+      subtitle: AutoSizeText(
+        chat.message,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }

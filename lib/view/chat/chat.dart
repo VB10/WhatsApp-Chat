@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:whatchats/screen/chat/chat_view_android.dart';
 import './chat_view.dart';
+import 'chat_android.dart';
 
 class Chat extends StatefulWidget {
   @override

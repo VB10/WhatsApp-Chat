@@ -23,7 +23,7 @@ class ChatViewAndroid extends ChatViewModel {
             IconButton(icon: Icon(Icons.more_vert), onPressed: () {}),
           ],
           centerTitle: false,
-          backgroundColor: Theme.of(context).accentColor,
+          backgroundColor: Colors.green,
           bottom: TabBar(
             tabs: [Tab(text: "CHATS"), Tab(text: "STATE"), Tab(text: "CALL")],
             indicatorColor: Theme.of(context).canvasColor,
@@ -159,7 +159,7 @@ class ChatViewAndroid extends ChatViewModel {
             chat.date,
             style: Theme.of(context)
                 .textTheme
-                .headline5
+                .subtitle2
                 .copyWith(color: Theme.of(context).splashColor),
           ),
           Spacer()

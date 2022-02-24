@@ -1,8 +1,8 @@
 class ChatModel {
-  String date;
-  String image;
-  String message;
-  String name;
+  String? date;
+  String? image;
+  String? message;
+  String? name;
 
   ChatModel({this.date, this.image, this.message, this.name});
 

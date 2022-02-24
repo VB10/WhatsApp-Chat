@@ -10,11 +10,11 @@ import 'model/chat_model.dart';
 
 abstract class ChatViewModel extends State<Chat> {
   // Add your state and logic here
-  Dio dio = NetworkManager.instance.dio;
-  AppStringConstants appStringConstants = AppStringConstants.instance;
+  Dio? dio = NetworkManager.instance!.dio;
+  AppStringConstants? appStringConstants = AppStringConstants.instance;
 
   Future<List<ChatModel>> getChatAllData() async {
-    final response = await dio.get("chats");
+    final response = await dio!.get("chats");
 
     switch (response.statusCode) {
       case HttpStatus.ok:
@@ -26,7 +26,7 @@ abstract class ChatViewModel extends State<Chat> {
         break;
 
       default:
-        return Future.error(response.statusMessage);
+        return Future.error(response.statusMessage!);
     }
   }
 }

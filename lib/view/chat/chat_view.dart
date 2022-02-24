@@ -39,9 +39,9 @@ class ChatView extends ChatViewModel {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
               if (snapshot.hasData) {
-                return buildPageListWidget(snapshot.data);
+                return buildPageListWidget(snapshot.data!);
               }
-              return Text(snapshot.error);
+              return Text(snapshot.error as String);
 
             case ConnectionState.waiting:
             case ConnectionState.active:
@@ -63,7 +63,7 @@ class ChatView extends ChatViewModel {
         decoration: InputDecoration(
             contentPadding: EdgeInsets.zero,
             prefixIcon: Icon(Icons.search),
-            hintText: appStringConstants.search,
+            hintText: appStringConstants!.search,
             fillColor: Colors.grey[300],
             filled: true,
             border: buildOutlineInputBorder,
@@ -74,10 +74,10 @@ class ChatView extends ChatViewModel {
 
   Text buildTextChatHighText(BuildContext context) {
     return Text(
-      appStringConstants.chat,
+      appStringConstants!.chat,
       style: Theme.of(context)
           .textTheme
-          .headline3
+          .headline3!
           .copyWith(color: Colors.black, fontWeight: FontWeight.bold),
     );
   }
@@ -87,7 +87,7 @@ class ChatView extends ChatViewModel {
     return Visibility(
         visible: innerBoxIsScrolled,
         child: Text(
-          appStringConstants.chat,
+          appStringConstants!.chat,
           style: Theme.of(context).textTheme.headline5,
         ));
   }
@@ -110,7 +110,7 @@ class ChatView extends ChatViewModel {
   FlatButton buildFlatButtonEdit() {
     return FlatButton(
       onPressed: () {},
-      child: buildTextWidget(appStringConstants.edit),
+      child: buildTextWidget(appStringConstants!.edit),
       padding: EdgeInsets.zero,
     );
   }
@@ -120,7 +120,7 @@ class ChatView extends ChatViewModel {
       text,
       style: Theme.of(context)
           .textTheme
-          .subtitle1
+          .subtitle1!
           .copyWith(color: Theme.of(context).primaryColor),
     );
   }
@@ -136,8 +136,8 @@ class ChatView extends ChatViewModel {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  buildTextWidget(appStringConstants.broad),
-                  buildTextWidget(appStringConstants.newGroup)
+                  buildTextWidget(appStringConstants!.broad),
+                  buildTextWidget(appStringConstants!.newGroup)
                 ],
               ),
               buildListChatCardWidget(data, index)
@@ -156,21 +156,21 @@ class ChatView extends ChatViewModel {
       subtitle: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [Text(data[index].message, maxLines: 1), Divider()],
+        children: [Text(data[index].message!, maxLines: 1), Divider()],
       ),
     );
   }
 
   CircleAvatar buildCircleAvatarCardImage(List<ChatModel> data, int index) {
     return CircleAvatar(
-      backgroundImage: NetworkImage(data[index].image),
+      backgroundImage: NetworkImage(data[index].image!),
     );
   }
 
   Row buildRowTitleText(List<ChatModel> data, int index) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [Text(data[index].name), Text(data[index].date)],
+      children: [Text(data[index].name!), Text(data[index].date!)],
     );
   }
 }

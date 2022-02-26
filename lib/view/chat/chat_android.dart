@@ -36,11 +36,11 @@ class ChatViewAndroid extends ChatViewModel {
 
   TextStyle get appBarTextStyle => Theme.of(context)
       .primaryTextTheme
-      .headline5
+      .headline5!
       .copyWith(fontWeight: FontWeight.w700);
   TextStyle get appBarTitleTextStyle => Theme.of(context)
       .primaryTextTheme
-      .headline4
+      .headline4!
       .copyWith(fontWeight: FontWeight.w700, color: Colors.white);
 
   Widget buildFutureChats() {
@@ -51,9 +51,9 @@ class ChatViewAndroid extends ChatViewModel {
         switch (snapshot.connectionState) {
           case ConnectionState.done:
             if (snapshot.hasData) {
-              return buildListCard(snapshot.data);
+              return buildListCard(snapshot.data!);
             } else {
-              return Text(snapshot.error);
+              return Text(snapshot.error as String);
             }
             break;
           case ConnectionState.active:
@@ -64,7 +64,7 @@ class ChatViewAndroid extends ChatViewModel {
               child: FlutterLogo(),
             );
           default:
-            return Text(snapshot.error);
+            return Text(snapshot.error as String);
         }
       },
     );
@@ -98,7 +98,7 @@ class ChatViewAndroid extends ChatViewModel {
         "Chats",
         style: Theme.of(context)
             .textTheme
-            .headline5
+            .headline5!
             .copyWith(fontWeight: FontWeight.w700),
       ),
     );
@@ -138,7 +138,7 @@ class ChatViewAndroid extends ChatViewModel {
       text,
       style: Theme.of(context)
           .textTheme
-          .headline5
+          .headline5!
           .copyWith(color: Theme.of(context).primaryColor),
     );
   }
@@ -147,24 +147,24 @@ class ChatViewAndroid extends ChatViewModel {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: CircleAvatar(
-        backgroundImage: NetworkImage(chat.image),
+        backgroundImage: NetworkImage(chat.image!),
       ),
       title: Row(
         children: [
-          Text(chat.name),
+          Text(chat.name!),
           Spacer(flex: 9),
           AutoSizeText(
-            chat.date,
+            chat.date!,
             style: Theme.of(context)
                 .textTheme
-                .subtitle2
+                .subtitle2!
                 .copyWith(color: Theme.of(context).splashColor),
           ),
           Spacer()
         ],
       ),
       subtitle: AutoSizeText(
-        chat.message,
+        chat.message!,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
       ),
@@ -200,7 +200,7 @@ class ChatViewAndroid extends ChatViewModel {
     return Text(
       "Chats",
       style:
-          Theme.of(context).textTheme.headline1.copyWith(color: Colors.black),
+          Theme.of(context).textTheme.headline1!.copyWith(color: Colors.black),
     );
   }
 }

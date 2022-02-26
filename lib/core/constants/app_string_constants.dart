@@ -1,6 +1,6 @@
 class AppStringConstants {
-  static AppStringConstants _instance;
-  static AppStringConstants get instance {
+  static AppStringConstants? _instance;
+  static AppStringConstants? get instance {
     if (_instance == null) {
       _instance = AppStringConstants._init();
     }
